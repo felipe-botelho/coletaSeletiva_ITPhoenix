@@ -1,12 +1,9 @@
 import tkinter
 from tkinter import *
-from tkinter.ttk import Progressbar
 import pygame
 from pygame import *
 import random
 import webbrowser
-import time
-import threading
 
 #ativação do áudio
 pygame.mixer.init(44100, -16, 2, 2048)
