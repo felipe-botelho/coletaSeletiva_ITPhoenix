@@ -5,6 +5,8 @@ import pygame
 from pygame import *
 import random
 import webbrowser
+import time
+import threading
 
 #ativação do áudio
 pygame.mixer.init(44100, -16, 2, 2048)
@@ -18,7 +20,16 @@ perguntas = [
     "O que significa os 3Rs da sustentabilidade? ",
     "Qual a cor da lixeira de PLÁSTICO? ",
     "Qual a cor da lixeira de PAPEL? ",
-
+    "Qual a cor da lixeira de METAL? ",
+    "Qual a cor da lixeira de VIDRO? ",
+    "Qual é a cor da lixeira para resíduos não recicláveis? ",
+    "Qual é a cor da lixeira para resíduos orgânicos? ",
+    "Como separar corretamente o lixo? ",
+    "Quais itens abaixo pertencem a lixeira AZUL?" ,
+    "Quais itens abaixo pertencem a lixeira VERMELHA?" ,
+    "Qual a cor da lixeira para o descarte de PILHAS e BATERIAS?" ,
+    "Quais itens abaixo pertencem a lixeira AMARELA?" ,
+    "Quais itens abaixo pertencem a lixeira VERDE?" ,
 ]
 
 respostas_opcoes = [
@@ -27,17 +38,27 @@ respostas_opcoes = [
     ["Reduzir, Reaproveitar e Reciclar", "Reduzir, Reutilizar e Reciclar", "Reduzir, Reutilizar e Replantar",],
     ["Amarelo", "Verde", "Vermelha",],
     ["Azul", "Verde", "Amarelo",],
+    ["Vemelho", "Amarelo", "Verde",],
+    ["Azul", "Verde", "Vermelha",],
+    ["Laranja", "Cinza", "Marrom",],
+    ["Preto", "Branco", "Marrom",],
+    ["Separar o lixo reciclável (papel, frascos de vidro) do lixo orgânico (restos de alimento, papel sujo)", "Juntar todo o livro e descartar em um ponto de coleta", "Separar o lixo reciclável junto com o lixo orgânico",],
+    ["Garrafas, brinquedos, sacolas e produtos de limpeza", "Jornais, caixas de papelão, revistas, papel", "Latinha de cerveja, refrigerante, marmitex de alumínio, enlatados"],
+    ["Copo de plástico, sacolas, embalagem de xampu e canos", "Latas de aluminio, tampinha de garrafa, panela sem cabo e pregos", "Envelopes, cartões, cartolinas e papel de embrulho"],
+    ["Laranja", "Amarelo", "Cinza"],
+    ["Lata de aço, ferragens, chapa e parafusos", "DVDs, brinquedos, caneta e escova de dente", "Impresso, lista telefônica, papel de embrulho limpo e revistas"],
+    ["Garrafa PET, tubo de creme dental e caneta", "Fio de cobre, pregos e talheres de aço", "Pote de conserva, frasco de vidro e vidro quebrado"],
 ]
 
-respostas_corretas = [1,0,1,2,0,]
+respostas_corretas = [1,0,1,2,0,2,1,1,2,0,1,0,1,0,2]
 
 resposta_usuario = []
 
 indices = []
 def gen():
     global indices
-    while(len(indices) < 4):
-        x = random.randint(0,4)
+    while(len(indices) <= 14):
+        x = random.randint(0,14)
         if x in indices:
             continue
         else:
@@ -81,26 +102,24 @@ def mostrar_resultado(resultado):
     )
     labelresultadotexto.pack()
 
-    if resultado >= 15:
+    if resultado > 60:
         img = PhotoImage(file="imagens/excelent.png")
         labelimagem.configure(image=img)
         labelimagem.image = img
         labelresultadotexto.configure(text="PARABÉNS! Você acertou mais de 80% das perguntas. \n Você é um expert e "
                                            "merece uma medalha quando o \n assunto é coleta seletiva.")
-    elif (resultado <= 15 and resultado < 20):
+    elif (resultado > 30 and resultado < 60):
         img = PhotoImage(file="imagens/continue.png")
         labelimagem.configure(image=img)
         labelimagem.image = img
         labelresultadotexto.configure(text="Bom trabalho, mas você pode melhorar.")
         botaoRespostas()
-        #jogarNovamente()
     else:
         img = PhotoImage(file="imagens/help.gif")
         labelimagem.configure(image=img)
         labelimagem.image = img
         labelresultadotexto.configure(text="Você precisa estudar mais!")
         botaoRespostas()
-        #jogarNovamente()
 
 def calc():
     global indices,resposta_usuario,respostas_corretas
@@ -121,11 +140,12 @@ def selected():
     x = radiovar.get()
     resposta_usuario.append(x)
     radiovar.set(-1)
-    if perg < 4:
-        lblPerguntas.config(text= perguntas[indices[perg]])
+    if perg <= 14:
+        lblPerguntas.config(text=perguntas[indices[perg]])
         r1['text'] = respostas_opcoes[indices[perg]][0]
         r2['text'] = respostas_opcoes[indices[perg]][1]
         r3['text'] = respostas_opcoes[indices[perg]][2]
+        #time.sleep(3)
         perg += 1
     else:
         print(indices)
@@ -192,22 +212,6 @@ def iniciarPressionado():
     btnIniciar.destroy()
     gen()
     iniciarJogo()
-
-def reiniciar():
-    labeltexto.destroy()
-    labelimagem.destroy()
-    iniciarJogo()
-
-'''def jogarNovamente():
-    btnPlay = Button(
-        root,
-        text="Jogar novamente?",
-        font=("Calibri", 14),
-        relief=FLAT,
-        border=0,
-        command=reiniciar,
-    )
-    btnPlay.pack(pady=10)'''
 
 root = tkinter.Tk()
 root.title("Coleta Seletiva")
