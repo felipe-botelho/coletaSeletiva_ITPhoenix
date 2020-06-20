@@ -9,7 +9,7 @@ import webbrowser
 pygame.mixer.init(44100, -16, 2, 2048)
 audio = pygame.mixer.Sound('audio/audio.ogg')
 
-url = "https://drive.google.com/file/d/1HNyMzCpn7y2fejYQrOFupuR-0jpjBtnV/view?usp=sharing"
+url = "https://drive.google.com/file/d/1XXB6Yh1AUHyXJ_fiz5rdu0VIIkT2zXgp/view?usp=sharing"
 
 perguntas = [
     "O que é coleta seletiva? ",
