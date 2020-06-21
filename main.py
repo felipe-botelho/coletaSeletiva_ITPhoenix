@@ -256,7 +256,7 @@ lblInstrucoes.pack(pady=(10,30))
 
 lblRegras = Label(
     root,
-    text = "Esse quiz contém 30 perguntas sobre coleta seletiva.\n "
+    text = "Esse quiz contém 15 perguntas sobre coleta seletiva.\n "
            "Uma vez selecionada a resposta você não poderá voltar atrás. \n"
            "Pense bem antes de responder!",
     width = 100,
